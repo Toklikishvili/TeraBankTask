@@ -1,0 +1,6 @@
+@TeraBankTask.API_HostAddress = http://localhost:5237
+
+GET {{TeraBankTask.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
