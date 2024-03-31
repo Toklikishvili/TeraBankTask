@@ -11,7 +11,7 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
         builder.HasKey(u => u.Id);
         builder.Property(u => u.Firstname).HasMaxLength(50);
         builder.Property(u => u.Lastname).HasMaxLength(50);
-        builder.Property(u => u.Email).HasMaxLength(100);
+        builder.Property(u => u.Email).IsUnicode();
         builder.Property(u => u.Password).HasMaxLength(100);
 
         builder.HasMany(u => u.TransactionsSent)
