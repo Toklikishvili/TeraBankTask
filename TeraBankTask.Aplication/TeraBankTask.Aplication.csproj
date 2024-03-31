@@ -7,7 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="13.0.1" />
+    <PackageReference Include="MediatR" Version="12.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\TeraBankTask.Domain\TeraBankTask.Domain.csproj" />
+    <ProjectReference Include="..\TeraBankTask.Shared\TeraBankTask.Shared.csproj" />
   </ItemGroup>
 
 </Project>

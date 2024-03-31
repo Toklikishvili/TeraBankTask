@@ -16,6 +16,9 @@ public abstract class RepositorBase<Entity> : IRepositoryBase<Entity> where Enti
         _dbSet = _dbContext.Set<Entity>();
     }
 
+    public async virtual Task<IQueryable<Entity>> Set(Expression<Func<Entity , bool>> predicate) =>
+        _dbContext.Set<Entity>().Where(predicate);
+
     public async Task<IEnumerable<Entity>> GetAllAsync(Expression<Func<Entity , bool>> predicate)
     {
         return await _dbSet.Where(predicate).ToListAsync();
