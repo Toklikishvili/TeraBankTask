@@ -34,7 +34,7 @@ internal class CreateUserCommandHandler : IRequestHandler<CreateUserCommand , Re
         {
             var result = await _unitOfWork.UserRepository.Set(x => x.Email == request.CreateUserDTO.Email);
 
-            if (result == null)
+            if (!result.Any())
             {
                 var user = _mapper.Map<User>(request.CreateUserDTO);
                 await _unitOfWork.UserRepository.AddAsync(user);

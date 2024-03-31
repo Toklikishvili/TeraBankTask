@@ -16,30 +16,36 @@ public abstract class RepositorBase<Entity> : IRepositoryBase<Entity> where Enti
         _dbSet = _dbContext.Set<Entity>();
     }
 
-    public async virtual Task<IQueryable<Entity>> Set(Expression<Func<Entity , bool>> predicate) =>
+    public virtual async Task<IQueryable<Entity>> Set(Expression<Func<Entity , bool>> predicate) =>
         _dbContext.Set<Entity>().Where(predicate);
 
-    public async Task<IEnumerable<Entity>> GetAllAsync(Expression<Func<Entity , bool>> predicate)
+    public virtual async Task<IEnumerable<Entity>> GetAllAsync(Expression<Func<Entity , bool>> predicate)
     {
         return await _dbSet.Where(predicate).ToListAsync();
     }
 
-    public async Task<IEnumerable<Entity>> GetAllAsync()
+    public virtual async Task<IEnumerable<Entity>> GetAllAsync()
     {
         return await _dbSet.ToListAsync();
     }
 
-    public async Task<Entity> GetByIdAsync(int id)
+    public virtual async Task<Entity> GetByIdAsync(int id)
     {
         return await _dbSet.FindAsync(id) ?? throw new KeyNotFoundException($"Record with key {id} not found");
     }
 
-    public async Task AddAsync(Entity entity)
+    public virtual async Task AddAsync(Entity entity)
     {
         await _dbSet.AddAsync(entity);
     }
 
-    public async Task DeleteAsync(int id)
+    public virtual void Update(Entity entity)
+    {
+        _dbSet.Attach(entity);
+        _dbContext.Entry(entity).State = EntityState.Modified;
+    }
+
+    public virtual async Task DeleteAsync(int id)
     {
         var entity = await GetByIdAsync(id);
         if (entity != null)

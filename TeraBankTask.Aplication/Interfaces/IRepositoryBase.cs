@@ -9,5 +9,7 @@ public interface IRepositoryBase<Entity> where Entity : class
     Task<IEnumerable<Entity>> GetAllAsync();
     Task<Entity> GetByIdAsync(int id);
     Task AddAsync(Entity entity);
+    void Update(Entity entity);
     Task DeleteAsync(int id);
+
 }

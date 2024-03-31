@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using TeraBankTask.Aplication.DTOs;
+using TeraBankTask.Aplication.Features.UserFeature.Command;
 
 namespace TeraBankTask.API.Controllers;
 
@@ -7,9 +9,28 @@ namespace TeraBankTask.API.Controllers;
 [ApiController]
 public class UserController : ControllerBase
 {
-    [HttpPost]
-    public IActionResult Post()
+    private readonly IMediator _mediator;
+
+    public UserController(IMediator mediator)
     {
-        return Ok(ModelState);
+        _mediator = mediator;
+    }
+
+    [HttpPost("postUserAsync")]
+    public async Task<IActionResult> PostUserAsync([FromBody] CreateUserDTO request)
+    {
+        var response = await _mediator.Send(new CreateUserCommand(request));
+
+        if (response.Succeeded)
+            return Ok(new { Id = response.Data });
+
+        return BadRequest();
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteUserByIdAsync(int id)
+    {
+        var response = await _mediator.Send(new DeleteUserByIdCommand(id));
+        return response.Succeeded ?Ok(): NotFound();
     }
 }
