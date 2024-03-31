@@ -11,7 +11,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
+    <ProjectReference Include="..\TeraBankTask.Aplication\TeraBankTask.Aplication.csproj" />
+    <ProjectReference Include="..\TeraBankTask.Persistence\TeraBankTask.Persistence.csproj" />
+    <ProjectReference Include="..\TeraBankTask.Shared\TeraBankTask.Shared.csproj" />
   </ItemGroup>
 
 </Project>
