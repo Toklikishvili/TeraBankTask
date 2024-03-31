@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\TeraBankTask.Domain\TeraBankTask.Domain.csproj" />
+  </ItemGroup>
+
 </Project>
