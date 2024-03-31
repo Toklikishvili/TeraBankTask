@@ -9,5 +9,6 @@ public class ApplicationMappingProfile : Profile
     public ApplicationMappingProfile()
     {
         CreateMap<CreateUserDTO,User>().ReverseMap();
+        CreateMap<CreateTransactionDTO , Transaction>().ReverseMap();
     }
 }

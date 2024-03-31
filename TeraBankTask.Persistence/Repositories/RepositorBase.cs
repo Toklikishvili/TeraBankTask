@@ -19,15 +19,6 @@ public abstract class RepositorBase<Entity> : IRepositoryBase<Entity> where Enti
     public virtual async Task<IQueryable<Entity>> Set(Expression<Func<Entity , bool>> predicate) =>
         _dbContext.Set<Entity>().Where(predicate);
 
-    public virtual async Task<IEnumerable<Entity>> GetAllAsync(Expression<Func<Entity , bool>> predicate)
-    {
-        return await _dbSet.Where(predicate).ToListAsync();
-    }
-
-    public virtual async Task<IEnumerable<Entity>> GetAllAsync()
-    {
-        return await _dbSet.ToListAsync();
-    }
 
     public virtual async Task<Entity> GetByIdAsync(int id)
     {
@@ -43,14 +34,5 @@ public abstract class RepositorBase<Entity> : IRepositoryBase<Entity> where Enti
     {
         _dbSet.Attach(entity);
         _dbContext.Entry(entity).State = EntityState.Modified;
-    }
-
-    public virtual async Task DeleteAsync(int id)
-    {
-        var entity = await GetByIdAsync(id);
-        if (entity != null)
-        {
-            _dbSet.Remove(entity);
-        }
     }
 }
