@@ -12,8 +12,8 @@ using TeraBankTask.Persistence.DataContext;
 namespace TeraBankTask.Persistence.Migrations
 {
     [DbContext(typeof(TeraBankTaskDbContext))]
-    [Migration("20240331144603_TeraBankTask")]
-    partial class TeraBankTask
+    [Migration("20240401175500_TeraBankDbMigration")]
+    partial class TeraBankDbMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -37,9 +37,11 @@ namespace TeraBankTask.Persistence.Migrations
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<DateTime>("CreateDate")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETDATE()");
 
-                    b.Property<bool>("IsDelete")
+                    b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
                     b.Property<int>("ReceiverUserId")
@@ -73,7 +75,7 @@ namespace TeraBankTask.Persistence.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<bool>("IsDelete")
+                    b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
                     b.Property<string>("Lastname")

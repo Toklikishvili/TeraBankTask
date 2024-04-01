@@ -36,13 +36,13 @@ internal class CreateTransactionCommandHandler : IRequestHandler<CreateTransacti
 
             var resultReceiver = await _unitOfWork.UserRepository.GetByIdAsync(request.CreateTransactionDTO.ReceiverUserId);
 
-            if (resultSender == null || resultSender.IsDelete==true)
+            if (resultSender == null || resultSender.IsDeleted==true)
                 return Result<int>.Warning($"User with SenderUserId {request.CreateTransactionDTO.SenderUserId} not found");
-            else if (resultReceiver == null || resultReceiver.IsDelete == true)
+            else if (resultReceiver == null || resultReceiver.IsDeleted == true)
                 return Result<int>.Warning($"User with ReceiverUserId {request.CreateTransactionDTO.ReceiverUserId} not found");
 
             var transaction = _mapper.Map<Transaction>(request.CreateTransactionDTO);
-            transaction.CreateDate= DateTime.Now;//TODO : კონფიგურაციაში შესაცვლელი 
+            transaction.CreateDate= DateTime.Now;
 
             await _unitOfWork.TransactionRepository.AddAsync(transaction);
             await _unitOfWork.CompleteAsync();

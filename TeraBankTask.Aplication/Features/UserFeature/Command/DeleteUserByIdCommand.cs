@@ -29,10 +29,10 @@ internal class DeleteUserByIdCommandHandler : IRequestHandler<DeleteUserByIdComm
         {
             var user = await _unitOfWork.UserRepository.GetByIdAsync(request.UserId);
 
-            if (user == null)
+            if (user == null || user.IsDeleted == true)
                 return Result<Unit>.Failure($"User with UserID {request.UserId} not found ");
 
-            user.IsDelete = true;
+            user.IsDeleted = true;
             _unitOfWork.UserRepository.Update(user);
             await _unitOfWork.CompleteAsync();
 

@@ -23,6 +23,8 @@ public class UserController : ControllerBase
 
         if (response.Succeeded)
             return Ok(new { Id = response.Data });
+        if (response.Warninged)
+            return BadRequest(response.Messages);
 
         return BadRequest();
     }
@@ -30,7 +32,9 @@ public class UserController : ControllerBase
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteUserByIdAsync(int id)
     {
+        if (id == 0) return BadRequest();
+
         var response = await _mediator.Send(new DeleteUserByIdCommand(id));
-        return response.Succeeded ?Ok(): NotFound();
+        return response.Succeeded ? Ok() : NotFound(response.Messages);
     }
 }

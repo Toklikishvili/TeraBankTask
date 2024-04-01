@@ -10,6 +10,6 @@ public class TransactionConfiguration : IEntityTypeConfiguration<Transaction>
     {
         builder.HasKey(t => t.Id);
         builder.Property(t => t.Amount).IsRequired();
-        builder.Property(t => t.CreateDate).IsRequired();
+        builder.Property(t => t.CreateDate).HasDefaultValueSql("GETDATE()");
     }
 }

@@ -42,7 +42,7 @@ internal class CreateUserCommandHandler : IRequestHandler<CreateUserCommand , Re
 
                 return Result<int>.Success(user.Id);
             }
-            return Result<int>.Warning($"This is similar User. Email:  {request.CreateUserDTO.Email}");
+            return Result<int>.Warning($"Similar user email exists :  {request.CreateUserDTO.Email}");
         }
         catch (Exception ex)
         {
